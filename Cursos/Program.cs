@@ -25,7 +25,8 @@ public class Program
             opitions.UseSqlite(deafultConnectionString);
         });
 
-        builder.Services.AddScoped(typeof(IRepository<>), typeof(AlunoRepository));
+        builder.Services.AddScoped<IAlunoRepository, AlunoRepository>();
+        builder.Services.AddScoped<ICursoRepository, CursoRepository>();
 
         builder.Services.AddEndpointsApiExplorer();
 

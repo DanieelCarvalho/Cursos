@@ -1,33 +1,25 @@
 ﻿using AutoMapper;
-using Cursos.Context;
-using Cursos.Domain.Models;
 using Cursos.Domain.Models.Dtos;
+using Cursos.Domain.Models;
 using Cursos.Infra.Repository;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace Cursos.Controllers;
 
-
-[ApiController]
-[Route("alunos")]
-public class AlunoController : ControllerBase
+public class CursoController : ControllerBase
 {
-    
-
-    private readonly IAlunoRepository _alunoRepository;
     private readonly IMapper _mapper;
 
-    public AlunoController(IMapper mapper, IAlunoRepository alunoRepository)
+    public CursoController(IMapper mapper)
     {
+
         
-        _alunoRepository = alunoRepository;
         _mapper = mapper;
     }
 
     [HttpGet]
-    public async Task<ActionResult> GetAll([FromQuery(Name ="page")]int page=0, 
-                                           [FromQuery(Name ="size")] int size=10)
+    public async Task<ActionResult> GetAll([FromQuery(Name = "page")] int page = 0,
+                                           [FromQuery(Name = "size")] int size = 10)
     {
 
 
@@ -43,7 +35,7 @@ public class AlunoController : ControllerBase
     {
         var buscarAluno = _alunoRepository.FindById(id);
 
-        if(buscarAluno == null)
+        if (buscarAluno == null)
             return NotFound();
 
         return Ok(buscarAluno);
@@ -76,4 +68,7 @@ public class AlunoController : ControllerBase
         await _alunoRepository.Delete(id);
         return NoContent();
     }
+
+
+
 }
