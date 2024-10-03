@@ -38,6 +38,7 @@ public class AlunoRepository : IAlunoRepository
     {
        
         var alunos = await _dbContext.Alunos.Skip(offset).Take(size).ToListAsync();
+      
         return (alunos);
     }
 

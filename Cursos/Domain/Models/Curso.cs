@@ -2,10 +2,11 @@
 
 public class Curso : Entity
 {
+
     public string Nome { get; set; }
 
-    public string Descricao { get; set; }
+    public string? Descricao { get; set; }
 
-    public List<Matricula> Matriculas { get; set; }
+    public virtual List<Matricula> Matriculas { get; set; }
 
 }

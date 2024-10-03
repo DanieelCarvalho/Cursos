@@ -7,5 +7,5 @@ public class Aluno : Entity
     public string Email { get; set; }
 
 
-    public List<Matricula> Matriculas { get; set; } = new();
+    public virtual List<Matricula> Matriculas { get; set; } = new();
 }

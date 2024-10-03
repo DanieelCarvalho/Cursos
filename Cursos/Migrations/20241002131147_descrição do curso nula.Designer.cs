@@ -2,6 +2,7 @@
 using Cursos.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -9,16 +10,14 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Cursos.Migrations
 {
     [DbContext(typeof(CursosDbContext))]
-    partial class CursosDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241002131147_descrição do curso nula")]
+    partial class descriçãodocursonula
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
-            modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.8")
-                .HasAnnotation("Proxies:ChangeTracking", false)
-                .HasAnnotation("Proxies:CheckEquality", false)
-                .HasAnnotation("Proxies:LazyLoading", true);
+            modelBuilder.HasAnnotation("ProductVersion", "8.0.8");
 
             modelBuilder.Entity("Cursos.Domain.Models.Aluno", b =>
                 {

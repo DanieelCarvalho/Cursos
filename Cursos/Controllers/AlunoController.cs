@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using Cursos.Context;
 using Cursos.Domain.Models;
-using Cursos.Domain.Models.Dtos;
+using Cursos.Domain.Models.Dtos.Aluno;
 using Cursos.Infra.Repository;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -34,7 +34,8 @@ public class AlunoController : ControllerBase
         var offset = page * size;
 
         var alunos = await _alunoRepository.FindAll(offset, size);
-        return Ok(alunos);
+        var alunosResponse = alunos.Select(_mapper.Map<AlunoReadDto>);
+        return Ok(alunosResponse);
     }
 
 
@@ -46,7 +47,8 @@ public class AlunoController : ControllerBase
         if(buscarAluno == null)
             return NotFound();
 
-        return Ok(buscarAluno);
+        var alunoResponse = _mapper.Map<AlunoReadDto>(buscarAluno);
+        return Ok(alunoResponse);
 
     }
 
@@ -55,6 +57,7 @@ public class AlunoController : ControllerBase
     {
         var alunoParaCadastrar = _mapper.Map<Aluno>(alunoDto);
         await _alunoRepository.Save(alunoParaCadastrar);
+        var alunoResponse = _mapper.Map<AlunoReadDto>(alunoParaCadastrar);
 
         return CreatedAtAction(nameof(GetById), new { id = alunoParaCadastrar.Id }, alunoParaCadastrar);
 

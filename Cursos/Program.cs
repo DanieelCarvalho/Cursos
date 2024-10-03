@@ -22,7 +22,7 @@ public class Program
 
         builder.Services.AddDbContext<CursosDbContext>(opitions =>
         {
-            opitions.UseSqlite(deafultConnectionString);
+            opitions.UseLazyLoadingProxies().UseSqlite(deafultConnectionString);
         });
 
         builder.Services.AddScoped<IAlunoRepository, AlunoRepository>();
