@@ -39,7 +39,7 @@ public class MatriculasController : ControllerBase
 
     [HttpGet("aluno/{alunoId}")]
 
-    public async Task<IActionResult> GetByAlunoECurso(int alunoId)
+    public async Task<IActionResult> GetByMatriculaPorAluno(int alunoId)
     {
         var matricula = await _cursosDbContext
             .Matriculas
@@ -53,10 +53,26 @@ public class MatriculasController : ControllerBase
         return Ok(matriculasResponse);
 
     }
+    [HttpGet("curso/{cursoId}")]
+
+    public async Task<IActionResult> GetByMatriculaPorCurso(int cursoId)
+    {
+        var matricula = await _cursosDbContext
+            .Matriculas
+            .Where((matricula) => matricula.CursoId == cursoId)
+            .ToListAsync();
+
+        if (matricula.Count() == 0) return NotFound();
+
+        var matriculasResponse = matricula.Select(_mapper.Map<MatriculaReadDto>);
+
+        return Ok(matriculasResponse);
+
+    }
 
     [HttpGet("{alunoId:int}/{cursoId:int}")]
 
-    public async Task<IActionResult> GetByAlunoECurso([FromRoute]int alunoId, [FromRoute] int cursoId)
+    public async Task<IActionResult> GetByMatricula([FromRoute]int alunoId, [FromRoute] int cursoId)
     {
         var matricula = await _cursosDbContext
             .Matriculas
@@ -91,7 +107,7 @@ public class MatriculasController : ControllerBase
         var matriculaSalva = entityEntry.Entity;
         var matriculasResponse = _mapper.Map<MatriculaReadDto>(matriculaSalva);
 
-        return CreatedAtAction(nameof(GetByAlunoECurso), 
+        return CreatedAtAction(nameof(GetByMatricula), 
          new { matriculaSalva.AlunoId, matriculaSalva.CursoId },
            matriculasResponse);
         
