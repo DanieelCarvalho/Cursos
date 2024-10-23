@@ -10,7 +10,9 @@ public class CursoProfile : Profile
 
         CreateMap<CursoCreateDto, Curso>();
         CreateMap<CursoUpdateDto, Curso>();
-        }
+        CreateMap<Curso, CursoReadDto>();
 
     }
+
+}
 

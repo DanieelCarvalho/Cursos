@@ -34,7 +34,7 @@ public class AlunoController : ControllerBase
         var offset = page * size;
 
         var alunos = await _alunoRepository.FindAll(offset, size);
-        var alunosResponse = alunos.Select(_mapper.Map<AlunoReadDto>);
+        var alunosResponse = alunos.Select(_mapper.Map<AlunoReadDto>).ToList();
         return Ok(alunosResponse);
     }
 
@@ -42,7 +42,7 @@ public class AlunoController : ControllerBase
     [HttpGet("{id}")]
     public async Task<IActionResult> GetById(int id)
     {
-        var buscarAluno = _alunoRepository.FindById(id);
+        var buscarAluno = await _alunoRepository.FindById(id);
 
         if(buscarAluno == null)
             return NotFound();

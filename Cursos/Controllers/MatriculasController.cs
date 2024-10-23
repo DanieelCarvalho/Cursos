@@ -74,6 +74,14 @@ public class MatriculasController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> Register(MatriculaCreateDto matriculaCreateDto)
     {
+      var exists = await _cursosDbContext.Matriculas
+      .AnyAsync(m => m.AlunoId == matriculaCreateDto.AlunoId && m.CursoId == matriculaCreateDto.CursoId);
+
+        if (exists)
+        {
+            return Conflict("A matrícula já existe para este aluno e curso.");
+        }
+
         var matriculaParaCadastrar = _mapper.Map<Matricula>(matriculaCreateDto);
 
         var entityEntry = await _cursosDbContext.Matriculas.AddAsync(matriculaParaCadastrar);
@@ -90,18 +98,22 @@ public class MatriculasController : ControllerBase
     }
 
 
-    [HttpPut("{id:int}")]
-    public async Task<IActionResult> Update(int id)
+
+
+    [HttpDelete("{alunoId}/{cursoId}")]
+    public async Task<IActionResult> Delete(int alunoId, int cursoId)
     {
+        var matricula = await _cursosDbContext.Matriculas.FindAsync(alunoId, cursoId);
 
+        if (matricula == null)
+        {
+            return NotFound();
+        }
 
-        throw new NotImplementedException();
+        _cursosDbContext.Matriculas.Remove(matricula);
+        await _cursosDbContext.SaveChangesAsync();
 
-    }
-    [HttpDelete("{id:int}")]
-    public async Task<IActionResult> Delete(int id)
-    {
-        throw new NotImplementedException();
+        return NoContent();
     }
 
 

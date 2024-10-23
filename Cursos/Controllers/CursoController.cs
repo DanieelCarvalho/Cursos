@@ -25,20 +25,22 @@ public class CursoController : ControllerBase
 
         var offset = page * size;
 
-        var alunos = await _cursoRepository.FindAll(offset, size);
-        return Ok(alunos);
+        var curso = await _cursoRepository.FindAll(offset, size);
+        var cursoResponse = curso.Select(_mapper.Map<CursoReadDto>).ToList();
+        return Ok(cursoResponse);
     }
 
 
     [HttpGet("{id}")]
     public async Task<IActionResult> GetById(int id)
     {
-        var buscarCurso = _cursoRepository.FindById(id);
+        var buscarCurso = await _cursoRepository.FindById(id);
 
         if (buscarCurso == null)
             return NotFound();
 
-        return Ok(buscarCurso);
+        var cursoResponse = _mapper.Map<CursoReadDto>(buscarCurso);
+        return Ok(cursoResponse);
 
     }
 
@@ -62,6 +64,7 @@ public class CursoController : ControllerBase
 
 
     }
+
     [HttpDelete("{id:int}")]
     public async Task<IActionResult> Delete(int id)
     {

@@ -16,7 +16,7 @@ public class CursoRepository : ICursoRepository
 
     public async Task Delete(int id)
     {
-        var cursoDeletar = await _dbContext.Alunos.FindAsync(id);
+        var cursoDeletar = await _dbContext.Curso.FindAsync(id);
 
         _dbContext.Remove(cursoDeletar);
         await _dbContext.SaveChangesAsync();
@@ -43,10 +43,12 @@ public class CursoRepository : ICursoRepository
     public async Task<Curso> Update(int id, Curso newEntity)
     {
         var cursoExistente = await _dbContext.Curso.FindAsync(id);
+        
         if (cursoExistente == null)
             throw new Exception("Aluno não encontrado");
 
         cursoExistente.Nome = newEntity.Nome;
+        cursoExistente.Descricao = newEntity.Descricao;
       
 
         _dbContext.Curso.Update(cursoExistente);

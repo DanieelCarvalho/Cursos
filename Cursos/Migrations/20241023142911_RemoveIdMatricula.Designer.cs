@@ -2,6 +2,7 @@
 using Cursos.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -9,9 +10,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Cursos.Migrations
 {
     [DbContext(typeof(CursosDbContext))]
-    partial class CursosDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241023142911_RemoveIdMatricula")]
+    partial class RemoveIdMatricula
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

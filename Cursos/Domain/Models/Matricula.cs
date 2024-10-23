@@ -1,6 +1,6 @@
 ﻿namespace Cursos.Domain.Models;
 
-public class Matricula : Entity
+public class Matricula 
 {
     public int AlunoId { get; set; }
 
